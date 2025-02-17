@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Rings
@@ -9,6 +10,7 @@ namespace Rings
     
         Ring[] _rings;
         bool[] _isRingIndexUsed;
+        Ring _selectedRing;
     
         void Start()
         {
@@ -25,17 +27,36 @@ namespace Rings
             }
         }
         
-        public bool TrySpawnRing(Vector3 position)
+        public bool TrySpawnRing(Vector3 position, int x, int y)
         {
             if (!TryGetUniqueRingPrefab(out var ringPrefab))
                 return false;
         
             var ring = new GameObject().AddComponent<Ring>();
             ring.transform.position = position;
+            ring.SetPosition(x, y);
             ring.SetRingPrefab(ringPrefab);
+            ring.OnRingClicked += OnRingClicked;
             return true;
         }
-    
+
+        void OnRingClicked(Ring clickedRing)
+        {
+            if (_selectedRing != null)
+            {
+                return;
+            }
+            
+            if (!IsTopRing(clickedRing))
+            {
+                return;
+            }
+            
+            _selectedRing = clickedRing;
+            clickedRing.OnRingClicked -= OnRingClicked;
+            clickedRing.RemovePosition();
+        }
+
         bool TryGetUniqueRingPrefab(out GameObject ringPrefab)
         {
             _isRingIndexUsed = new bool[_ringPrefabs.ringPrefabs.Length];
@@ -62,6 +83,13 @@ namespace Rings
             Debug.LogWarning("All ring prefabs are used!");
             ringPrefab = null;
             return false;
+        }
+        
+        bool IsTopRing(Ring ring)
+        {
+            var x = ring.X;
+            var y = ring.Y;
+            return !_rings.Any(r => r.X == x && r.Y == y - 1);
         }
     }
 }
