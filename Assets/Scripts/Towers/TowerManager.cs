@@ -1,3 +1,5 @@
+using System;
+using Rings;
 using UnityEngine;
 
 namespace Towers
@@ -6,23 +8,40 @@ namespace Towers
     {
         [SerializeField]
         Tower[] _towers;
+        [SerializeField]
+        RingManager _ringManager;
         
-        public bool TryPlaceRing(int towerIndex, GameObject ringPrefab, int ringIndex)
+        void Start()
         {
-            if (towerIndex < 0 || towerIndex >= _towers.Length)
-                return false;
-            
-            _towers[towerIndex].PlaceRing(ringPrefab, ringIndex);
-            return true;
+            foreach (var tower in _towers)
+            {
+                tower.OnTowerClicked += OnTowerClicked;
+            }
         }
-        
-        public bool TryRemoveRing(int towerIndex, int ringIndex)
+
+        void OnTowerClicked(Tower tower)
         {
-            if (towerIndex < 0 || towerIndex >= _towers.Length)
-                return false;
+            if (!_ringManager.IsRingSelected)
+            {
+                return;
+            }
             
-            _towers[towerIndex].RemoveRing(ringIndex);
-            return true;
+            if (!tower.TryGetLowestOpenRingPlacement(out var placementPosition, out var placementIndex))
+            {
+                return;
+            }
+            
+            var ring = _ringManager.SelectedRing;
+            _ringManager.PlaceRing(placementPosition, tower.TowerIndex, placementIndex);
+            tower.PlaceRing(ring, placementIndex);
+        }
+
+        void OnDestroy()
+        {
+            foreach (var tower in _towers)
+            {
+                tower.OnTowerClicked -= OnTowerClicked;
+            }
         }
     }
 }

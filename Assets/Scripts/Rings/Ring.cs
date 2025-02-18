@@ -7,10 +7,12 @@ namespace Rings
     public class Ring : MonoBehaviour, IPointerClickHandler
     {
         public event Action<Ring> OnRingClicked;
+        public event Action OnRingRemoved;
         public int X { get;  private set;}
         public int Y { get; private set; }
         bool _isDragging;
         Camera _camera;
+        public int RingIndex;
 
         void Start()
         {
@@ -48,12 +50,15 @@ namespace Rings
         {
             X = x;
             Y = y;
+            _isDragging = false;
         }
         
         public void RemovePosition()
         {
             X = -1;
             Y = -1;
+            _isDragging = true;
+            OnRingRemoved?.Invoke();
         }
     }
 }

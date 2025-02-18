@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Rings
 {
@@ -8,9 +10,11 @@ namespace Rings
         [SerializeField]
         RingPrefabs _ringPrefabs;
     
-        Ring[] _rings;
+        List<Ring> _rings;
         bool[] _isRingIndexUsed;
-        Ring _selectedRing;
+        public Ring SelectedRing { get; private set; }
+        
+        public bool IsRingSelected => SelectedRing != null;
     
         void Start()
         {
@@ -19,7 +23,7 @@ namespace Rings
                 Debug.LogError("RingPrefabs is empty!");
             }
         
-            _rings = FindObjectsByType<Ring>(FindObjectsSortMode.None);
+            _rings = FindObjectsByType<Ring>(FindObjectsSortMode.None).ToList();
             
             foreach (var ring in _rings)
             {
@@ -37,12 +41,27 @@ namespace Rings
             ring.SetPosition(x, y);
             ring.SetRingPrefab(ringPrefab);
             ring.OnRingClicked += OnRingClicked;
+            _rings.Add(ring);
+            ring.RingIndex = _rings.Count - 1;
             return true;
+        }
+        
+        public void PlaceRing(Vector3 position, int x, int y)
+        {
+            if (SelectedRing == null)
+            {
+                return;
+            }
+            
+            SelectedRing.transform.position = position;
+            SelectedRing.SetPosition(x, y);
+            SelectedRing.OnRingClicked += OnRingClicked;
+            SelectedRing = null;
         }
 
         void OnRingClicked(Ring clickedRing)
         {
-            if (_selectedRing != null)
+            if (SelectedRing != null)
             {
                 return;
             }
@@ -52,7 +71,7 @@ namespace Rings
                 return;
             }
             
-            _selectedRing = clickedRing;
+            SelectedRing = clickedRing;
             clickedRing.OnRingClicked -= OnRingClicked;
             clickedRing.RemovePosition();
         }
