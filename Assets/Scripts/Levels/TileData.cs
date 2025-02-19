@@ -6,21 +6,21 @@ namespace Levels
     [Serializable]
     public class TileData
     {
-        Ring _ring;
+        public int RingIndex { get; private set; }
         public bool IsOccupied { get; private set; }
         
-        public void SetRing(Ring ring)
+        public void SetRing(int ringIndex)
         {
-            _ring = ring;
+            RingIndex = ringIndex;
             IsOccupied = true;
         }
         
-        public Ring RemoveRing()
+        public int RemoveRing()
         {
-            var ring = _ring;
-            _ring = null;
+            var ringIndex = RingIndex;
             IsOccupied = false;
-            return ring;
+            RingIndex = -1;
+            return ringIndex;
         }
     }
 }

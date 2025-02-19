@@ -6,32 +6,43 @@ namespace Levels
     [Serializable]
     public class LevelLayout
     {
-        TileData[,] _tiles = new TileData[3, 3];
+        public TileData[,] Tiles { get; private set; } = new TileData[3, 3];
 
-        public bool TryPlaceRingByColumn(int column, Ring ring)
+        public bool TryPlaceRingByCoordinates (int ringIndex, int x, int y)
         {
-            for (var row = 2; row >= 0; row--)
+            if (IsIndexPlaced(ringIndex))
             {
-                if (_tiles[row, column].IsOccupied)
-                    continue;
-
-                _tiles[row, column].SetRing(ring);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool TryTakeRingByCoordinates(int row, int column, out Ring ring)
-        {
-            if (!_tiles[row, column].IsOccupied)
-            {
-                ring = null;
                 return false;
             }
-
-            ring = _tiles[row, column].RemoveRing();
+            
+            Tiles[x, y].SetRing(ringIndex);
             return true;
+        }
+        
+        public int RemoveRingByCoordinates (int x, int y)
+        {
+            return Tiles[x, y].RemoveRing();
+        }
+
+        bool IsIndexPlaced(int ringIndex)
+        {
+            if (ringIndex < 0)
+            {
+                return false;
+            }
+            
+            for (var x = 0; x < 3; x++)
+            {
+                for (var y = 0; y < 3; y++)
+                {
+                    if (Tiles[x, y].RingIndex == ringIndex)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
         }
     }
 }
