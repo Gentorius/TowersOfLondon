@@ -15,7 +15,7 @@ namespace Towers
             _ring.OnRingRemoved += RemoveRing;
         }
 
-        void RemoveRing()
+        void RemoveRing(Vector2 position)
         {
             _ring.OnRingRemoved -= RemoveRing;
             _ring = null;

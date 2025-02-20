@@ -64,6 +64,11 @@ namespace Towers
             placementIndex = -1;
             return false;
         }
+        
+        public Vector3 GetPlacementPosition(int placementIndex)
+        {
+            return GetRingPlacement(placementIndex).transform.position;
+        }
 
         Placement GetRingPlacement(int placementIndex)
         {

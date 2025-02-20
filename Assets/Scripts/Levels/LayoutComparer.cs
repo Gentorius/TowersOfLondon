@@ -1,6 +1,6 @@
 namespace Levels
 {
-    public class LayoutComparer
+    public static class LayoutComparer
     {
         public static bool Compare(LevelLayout layout1, LevelLayout layout2)
         {

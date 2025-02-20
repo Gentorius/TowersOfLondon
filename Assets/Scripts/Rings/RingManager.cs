@@ -31,18 +31,21 @@ namespace Rings
             }
         }
         
-        public bool TrySpawnRing(Vector3 position, int x, int y)
+        public bool TrySpawnRing(Vector3 position, int ringIndex, int x, int y, out Ring ring)
         {
             if (!TryGetUniqueRingPrefab(out var ringPrefab))
+            {
+                ring = null;
                 return false;
+            }
         
-            var ring = new GameObject().AddComponent<Ring>();
+            ring = new GameObject().AddComponent<Ring>();
             ring.transform.position = position;
             ring.SetPosition(x, y);
             ring.SetRingPrefab(ringPrefab);
             ring.OnRingClicked += OnRingClicked;
             _rings.Add(ring);
-            ring.RingIndex = _rings.Count - 1;
+            ring.RingIndex = ringIndex;
             return true;
         }
         

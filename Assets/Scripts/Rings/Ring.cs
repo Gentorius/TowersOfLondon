@@ -7,7 +7,7 @@ namespace Rings
     public class Ring : MonoBehaviour, IPointerClickHandler
     {
         public event Action<Ring> OnRingClicked;
-        public event Action OnRingRemoved;
+        public event Action<Vector2> OnRingRemoved;
         public int X { get;  private set;}
         public int Y { get; private set; }
         bool _isDragging;
@@ -55,10 +55,11 @@ namespace Rings
         
         public void RemovePosition()
         {
+            var coordinates = new Vector2(X, Y);
             X = -1;
             Y = -1;
             _isDragging = true;
-            OnRingRemoved?.Invoke();
+            OnRingRemoved?.Invoke(coordinates);
         }
     }
 }
