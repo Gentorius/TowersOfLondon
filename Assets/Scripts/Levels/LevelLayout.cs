@@ -24,6 +24,24 @@ namespace Levels
             return Tiles[x, y].RemoveRing();
         }
 
+        public int RemoveRingByIndex(int ringIndex)
+        {
+            var removedRingIndex = -1;
+            
+            for (var x = 0; x < 3; x++)
+            {
+                for (var y = 0; y < 3; y++)
+                {
+                    if (Tiles[x, y].RingIndex == ringIndex)
+                    {
+                        removedRingIndex = Tiles[x, y].RemoveRing();
+                    }
+                }
+            }
+            
+            return removedRingIndex;
+        }
+
         bool IsIndexPlaced(int ringIndex)
         {
             if (ringIndex < 0)
