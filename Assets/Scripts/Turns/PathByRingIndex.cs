@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Turns
 {
+    [Serializable]
     public class PathByRingIndex
     {
         public int RingIndex { get; private set; }
