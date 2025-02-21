@@ -61,5 +61,11 @@ namespace Rings
             _isDragging = true;
             OnRingRemoved?.Invoke(coordinates);
         }
+        
+        public void DestroyRing()
+        {
+            OnRingRemoved?.Invoke(new Vector2(X, Y));
+            Destroy(gameObject);
+        }
     }
 }

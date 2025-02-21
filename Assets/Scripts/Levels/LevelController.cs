@@ -15,14 +15,35 @@ namespace Levels
         [SerializeField]
         Settings.Settings _settings;
         
+        Level _currentLevel;
         LevelLayout _currentLevelLayout;
         LevelLayout _goalLevelLayout;
         readonly List<Ring> _rings = new();
         int _turnGoal;
         int _turnCount;
-        SolutionFinder _solutionFinder = new SolutionFinder();
+        readonly SolutionFinder _solutionFinder = new();
+        readonly LevelReader _levelReader = new();
+
+        public void StartLevel(string levelName)
+        {
+            var level = _levelReader.ReadLevelFromJson(levelName);
+            BuildLevel(level);
+        }
         
-        public void BuildLevel(Level level)
+        public void RestartLevel()
+        {
+            foreach (var ring in _rings)
+            {
+                ring.OnRingRemoved -= OnRingRemoved;
+                Destroy(ring.gameObject);
+            }
+            
+            _rings.Clear();
+            _towerManager.OnRingPlaced -= OnRingPlaced;
+            BuildLevel(_currentLevel);
+        }
+        
+        void BuildLevel(Level level)
         {
             if (!LevelValidator.IsLayoutValid(level.StartingLayout) )
             {
@@ -47,6 +68,7 @@ namespace Levels
                 }
             }
             
+            _currentLevel = level;
             _currentLevelLayout = level.StartingLayout;
             _goalLevelLayout = level.GoalLayout;
             _towerManager.OnRingPlaced += OnRingPlaced;

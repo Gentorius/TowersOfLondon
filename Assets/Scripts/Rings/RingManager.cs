@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -81,24 +82,24 @@ namespace Rings
 
         bool TryGetUniqueRingPrefab(out GameObject ringPrefab)
         {
-            _isRingIndexUsed = new bool[_ringPrefabs.ringPrefabs.Length];
+            _isRingIndexUsed = new bool[_ringPrefabs.RingPrefabList.Length];
         
-            var randomIndex = Random.Range(0, _ringPrefabs.ringPrefabs.Length);
+            var randomIndex = Random.Range(0, _ringPrefabs.RingPrefabList.Length);
         
             if (!_isRingIndexUsed[randomIndex])
             {
                 _isRingIndexUsed[randomIndex] = true;
-                ringPrefab = _ringPrefabs.ringPrefabs[randomIndex];
+                ringPrefab = _ringPrefabs.RingPrefabList[randomIndex];
                 return true;
             }
 
-            for (var i = 0; i < _ringPrefabs.ringPrefabs.Length; i++)
+            for (var i = 0; i < _ringPrefabs.RingPrefabList.Length; i++)
             {
                 if (_isRingIndexUsed[i])
                     continue;
 
                 _isRingIndexUsed[i] = true;
-                ringPrefab = _ringPrefabs.ringPrefabs[i];
+                ringPrefab = _ringPrefabs.RingPrefabList[i];
                 return true;
             }
             

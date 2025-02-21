@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Rings
+namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "RingPrefabs", menuName = "Scriptable Objects/RingPrefabs")]
     public class RingPrefabs : ScriptableObject
     {
-        public GameObject[] ringPrefabs;
+        public GameObject[] RingPrefabList;
     
-        public bool IsEmpty => ringPrefabs == null || ringPrefabs.Length == 0;
+        public bool IsEmpty => RingPrefabList == null || RingPrefabList.Length == 0;
     }
 }
