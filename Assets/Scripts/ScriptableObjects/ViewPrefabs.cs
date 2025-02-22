@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
+    [CreateAssetMenu(fileName = "ViewPrefabs", menuName = "Scriptable Objects/ViewPrefabs", order = 1)]
     public class ViewPrefabs : ScriptableObject
     {
         [SerializeField]

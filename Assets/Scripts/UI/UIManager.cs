@@ -11,6 +11,8 @@ namespace UI
     {
         [SerializeField]
         ViewPrefabs _viewPrefabs;
+        [SerializeField]
+        GameObject _root;
 
         readonly Dictionary<Type, IPresenter> _presenters = new();
         readonly List<IPresenter> _path = new();
@@ -35,7 +37,7 @@ namespace UI
             var viewPrefab = _viewPrefabs.FindViewByType<T>();
             if (viewPrefab != null)
             {
-                Instantiate(viewPrefab, transform);
+                Instantiate(viewPrefab, _root.transform);
                 viewPrefab.SetActive(false);
                 return viewPrefab.GetComponent<T>();
             }
