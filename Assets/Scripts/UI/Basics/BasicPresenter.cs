@@ -13,8 +13,8 @@ namespace UI.Basics
         
         public void LoadAndShowWindow()
         {
-            var viewPrefab = UIManager.LoadView<TView>();
-            View = UIManager.ShowView(viewPrefab);
+            LoadWindow();
+            ShowWindow();
         }
         
         public void HideWindow()

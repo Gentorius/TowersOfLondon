@@ -1,3 +1,4 @@
+using Levels;
 using UI.Basics;
 using UI.Level;
 using UI.Settings;
@@ -8,12 +9,14 @@ namespace UI.Menu
     {
         LevelPresenter _levelPresenter;
         SettingsPresenter _settingsPresenter;
+        LevelController _levelController;
 
         public override void Initialize(UIManager uiManager)
         {
             base.Initialize(uiManager);
             _levelPresenter = UIManager.GetPresenter<LevelPresenter>();
             _settingsPresenter = UIManager.GetPresenter<SettingsPresenter>();
+            _levelController = UIManager.GetMonoBehaviour<LevelController>();
         }
 
         protected override void OnShow()
@@ -32,6 +35,7 @@ namespace UI.Menu
         
         void OnStartButtonClickedHandler()
         {
+            _levelController.StartLevel();
             _levelPresenter.LoadAndShowWindow();
             HideWindow();
         }
@@ -41,8 +45,8 @@ namespace UI.Menu
             _settingsPresenter.LoadAndShowWindow();
             HideWindow();
         }
-        
-        void OnExitButtonClickedHandler()
+
+        static void OnExitButtonClickedHandler()
         {
             UnityEngine.Application.Quit();
         }

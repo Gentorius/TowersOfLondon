@@ -14,13 +14,13 @@ namespace Settings
         Difficulty _difficulty = Difficulty.Medium;
         string LevelDataPath => Application.dataPath + "/LevelData/";
         string LevelDataExtension => ".json";
-        string _levelPath;
+        public string LevelPath { get; private set; }
 
         void Awake()
         {
             _settingsPresenter = _uiManager.GetPresenter<SettingsPresenter>();
             _settingsPresenter.OnDifficultySelected += OnDifficultySelectedHandler;
-            _levelPath = LevelDataPath + "TowerOfLondon-Medium" + LevelDataExtension;
+            LevelPath = LevelDataPath + "TowerOfLondon-Medium" + LevelDataExtension;
         }
 
         void OnDestroy()
@@ -43,7 +43,7 @@ namespace Settings
         {
             _difficulty = difficulty;
 
-            _levelPath = _difficulty switch
+            LevelPath = _difficulty switch
             {
                 Difficulty.Easy => LevelDataPath + "TowerOfLondon-Easy" + LevelDataExtension,
                 Difficulty.Medium => LevelDataPath + "TowerOfLondon-Medium" + LevelDataExtension,

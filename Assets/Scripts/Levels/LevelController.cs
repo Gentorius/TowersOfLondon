@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Rings;
 using Towers;
@@ -23,10 +24,15 @@ namespace Levels
         int _turnCount;
         readonly SolutionFinder _solutionFinder = new();
         readonly LevelReader _levelReader = new();
+        public int TurnsLeft => _turnGoal - _turnCount;
 
-        public void StartLevel(string levelName)
+        public event Action OnVictory;
+        public event Action OnDefeat;
+        public event Action<int> OnTurnCountChanged;
+
+        public void StartLevel()
         {
-            var level = _levelReader.ReadLevelFromJson(levelName);
+            var level = _levelReader.ReadLevelFromJson(_settings.LevelPath);
             BuildLevel(level);
         }
         
@@ -67,6 +73,15 @@ namespace Levels
                     ring.OnRingRemoved += OnRingRemoved;
                 }
             }
+
+            for (var x = 0; x < 3; x++)
+            {
+                for (var y = 0; y < 3; y++)
+                {
+                    var ringIndex = level.GoalLayout.Tiles[x, y].RingIndex;
+                    _towerManager.PlaceRingInGoalTower(ringIndex, x, y);
+                }
+            }
             
             _currentLevel = level;
             _currentLevelLayout = level.StartingLayout;
@@ -91,6 +106,7 @@ namespace Levels
             
             _currentLevelLayout.TryPlaceRingByCoordinates(ringIndex, x, y);
             _turnCount++;
+            OnTurnCountChanged?.Invoke(TurnsLeft);
             
             if (_currentLevelLayout.Equals(_goalLevelLayout))
             {
@@ -111,13 +127,13 @@ namespace Levels
         void Victory()
         {
             CommonCleanup();
-            Debug.Log("Level complete!");
+            OnVictory?.Invoke();
         }
         
         void Defeat()
         {
             CommonCleanup();
-            Debug.Log("Level failed!");
+            OnDefeat?.Invoke();
         }
         
         void CommonCleanup()

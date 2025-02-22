@@ -7,9 +7,11 @@ namespace Towers
     public class TowerManager : MonoBehaviour
     {
         [SerializeField]
+        RingManager _ringManager;
+        [SerializeField]
         Tower[] _towers;
         [SerializeField]
-        RingManager _ringManager;
+        Tower[] _goalTowers;
         
         public event Action<Vector2> OnRingPlaced; 
         
@@ -26,6 +28,14 @@ namespace Towers
             var tower = _towers[x];
             var placementPosition = tower.GetPlacementPosition(y);
             _ringManager.TrySpawnRing(placementPosition, ringIndex, x, y, out ring);
+            tower.PlaceRing(ring, y);
+        }
+        
+        public void PlaceRingInGoalTower(int ringIndex, int x, int y)
+        {
+            var tower = _goalTowers[x];
+            var placementPosition = tower.GetPlacementPosition(y);
+            _ringManager.TrySpawnRing(placementPosition, ringIndex, x, y, out var ring);
             tower.PlaceRing(ring, y);
         }
 
