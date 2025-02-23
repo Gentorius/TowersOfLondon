@@ -56,7 +56,7 @@ namespace Turns
             var solution = new Solution();
             solution.SetStartingLayout(startingLayout);
             
-            var currentLayout = startingLayout;
+            var currentLayout = GetACopyOf(startingLayout);
             
             while (!LayoutComparer.Compare(currentLayout, goalLayout))
             {
@@ -71,21 +71,26 @@ namespace Turns
             solution = new Solution();
             solution.SetStartingLayout(startingLayout);
             
-            var currentLayout = startingLayout;
+            var currentLayout = GetACopyOf(startingLayout);
+            var exceedsBestSolution = false;
             
             while (!LayoutComparer.Compare(currentLayout, goalLayout))
             {
                 _turnGenerator.TakeARandomTurn(ref currentLayout, ref solution);
-                
-                if (solution.TurnCount > _bestSolution.TurnCount)
-                {
-                    return false;
-                }
+
+                if (solution.TurnCount <= _bestSolution.TurnCount)
+                    continue;
+
+                exceedsBestSolution = true;
+                break;
             }
             
-            return true;
+            return !exceedsBestSolution;
         }
 
-        
+        LevelLayout GetACopyOf(LevelLayout layout)
+        {
+            return layout.Clone() as LevelLayout;
+        }
     }
 }

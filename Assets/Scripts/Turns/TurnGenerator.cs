@@ -21,14 +21,14 @@ namespace Turns
         {
             var topRings = new List<int>();
             var tiles = currentLayout.Tiles;
-            for (var x = 0; x < 3; x++)
+            for (var y = 0; y < 3; y++)
             {
-                for (var y = 0; y < 3; y++)
+                for (var x = 0; x < 3; x++)
                 {
-                    if (!tiles[x, y].IsOccupied)
+                    if (!tiles[y, x].IsOccupied)
                         continue;
 
-                    if (y == 0 || !tiles[x, y - 1].IsOccupied)
+                    if (y == 0 || !tiles[y, x - 1].IsOccupied)
                     {
                         topRings.Add(tiles[x, y].RingIndex);
                     }
@@ -46,7 +46,7 @@ namespace Turns
             {
                 for (var y = 0; y < 3; y++)
                 {
-                    if (!tiles[x, y].IsOccupied && (y == 2 || tiles[x, y + 1].IsOccupied))
+                    if (!tiles[x, y].IsOccupied && (x == 2 || tiles[x + 1, y].IsOccupied))
                     {
                         lowestEmptyTiles.Add(new Vector2(x, y));
                     }

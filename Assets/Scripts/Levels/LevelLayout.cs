@@ -1,11 +1,19 @@
 using System;
+using UnityEngine;
 
 namespace Levels
 {
     [Serializable]
-    public class LevelLayout
+    public class LevelLayout : ICloneable
     {
-        public TileData[,] Tiles { get; private set; } = new TileData[3, 3];
+        [SerializeField]
+        TileData[] _upperTiles = new TileData[3];
+        [SerializeField]
+        TileData[] _middleTiles = new TileData[3];
+        [SerializeField]
+        TileData[] _lowerTiles = new TileData[3];
+        
+        public TileData[,] Tiles { get; internal set; } = new TileData[3, 3];
 
         public bool TryPlaceRingByCoordinates (int ringIndex, int x, int y)
         {
@@ -39,6 +47,26 @@ namespace Levels
             }
             
             return removedRingIndex;
+        }
+        
+        public void Deserialize()
+        {
+            for (var x = 0; x < 3; x++)
+            {
+                Tiles[0, x] = _upperTiles[x];
+                Tiles[1, x] = _middleTiles[x];
+                Tiles[2, x] = _lowerTiles[x];
+            }
+            
+            foreach (var tile in Tiles)
+            {
+                tile.Deserialize();
+            }
+        }
+        
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
 
         bool IsIndexPlaced(int ringIndex)

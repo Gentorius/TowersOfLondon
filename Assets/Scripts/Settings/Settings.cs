@@ -12,15 +12,15 @@ namespace Settings
         
         SettingsPresenter _settingsPresenter;
         Difficulty _difficulty = Difficulty.Medium;
-        string LevelDataPath => Application.dataPath + "/LevelData/";
-        string LevelDataExtension => ".json";
+        static string LevelDataPath => Application.dataPath + "/LevelData/TowerOfLondon-";
+        static string LevelDataExtension => ".json";
         public string LevelPath { get; private set; }
 
         void Awake()
         {
             _settingsPresenter = _uiManager.GetPresenter<SettingsPresenter>();
             _settingsPresenter.OnDifficultySelected += OnDifficultySelectedHandler;
-            LevelPath = LevelDataPath + "TowerOfLondon-Medium" + LevelDataExtension;
+            LevelPath = LevelDataPath + "Medium" + LevelDataExtension;
         }
 
         void OnDestroy()
@@ -45,9 +45,9 @@ namespace Settings
 
             LevelPath = _difficulty switch
             {
-                Difficulty.Easy => LevelDataPath + "TowerOfLondon-Easy" + LevelDataExtension,
-                Difficulty.Medium => LevelDataPath + "TowerOfLondon-Medium" + LevelDataExtension,
-                Difficulty.Hard => LevelDataPath + "TowerOfLondon-Hard" + LevelDataExtension,
+                Difficulty.Easy => LevelDataPath + "Easy" + LevelDataExtension,
+                Difficulty.Medium => LevelDataPath + "Medium" + LevelDataExtension,
+                Difficulty.Hard => LevelDataPath + "Hard" + LevelDataExtension,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

@@ -2,13 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Levels;
+using UnityEngine;
 
 namespace Turns
 {
     [Serializable]
     public class Solution
     {
+        [SerializeField]
         PathByRingIndex[] _paths;
+        [SerializeField]
+        int _turnCount;
+        
         public int TurnCount { get; private set; }
         
         public void SetStartingLayout(LevelLayout startingLayout)
@@ -39,6 +44,26 @@ namespace Turns
             var path = GetPathByRingIndex(ringIndex);
             TurnCount++;
             path.AddPathPoint(x, y, TurnCount);
+        }
+        
+        public void Serialize()
+        {
+            _turnCount = TurnCount;
+            
+            foreach (var path in _paths)
+            {
+                path.Serialize();
+            }
+        }
+        
+        public void Deserialize()
+        {
+            TurnCount = _turnCount;
+            
+            foreach (var path in _paths)
+            {
+                path.Deserialize();
+            }
         }
         
         void GeneratePathForEachRing(List<int> ringIndexes, List<int> initialX, List<int> initialY)

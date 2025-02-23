@@ -13,10 +13,12 @@ namespace Levels
             }
             
             var json = File.ReadAllText(filePath);
-            return JsonUtility.FromJson<Level>(json);
+            var level = JsonUtility.FromJson<Level>(json);
+            level.OnRead();
+            return level;
         }
-        
-        bool DoesFileExist(string filePath)
+
+        static bool DoesFileExist(string filePath)
         {
             return File.Exists(filePath);
         }

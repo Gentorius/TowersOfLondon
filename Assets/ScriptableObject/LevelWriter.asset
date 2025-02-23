@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ae46859bcd47d0a5770d8397a7a67e, type: 3}
+  m_Name: LevelWriter
+  m_EditorClassIdentifier: 
+  _levelName: Easy
+  _targetLevelLayout:
+    _upperTiles:
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    _middleTiles:
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    _lowerTiles:
+    - _ringIndex: 1
+      _isOccupied: 1
+    - _ringIndex: 2
+      _isOccupied: 1
+    - _ringIndex: 3
+      _isOccupied: 1
+  _goalLevelLayout:
+    _upperTiles:
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    _middleTiles:
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    - _ringIndex: -1
+      _isOccupied: 0
+    _lowerTiles:
+    - _ringIndex: 3
+      _isOccupied: 1
+    - _ringIndex: 2
+      _isOccupied: 1
+    - _ringIndex: 1
+      _isOccupied: 1
+  _solution:
+    _paths:
+    - _ringIndex: 3
+      _x: 02000000
+      _y: 00000000
+      _turnIndexes: 00000000
+    - _ringIndex: 2
+      _x: 02000000
+      _y: 01000000
+      _turnIndexes: 00000000
+    - _ringIndex: 1
+      _x: 02000000
+      _y: 02000000
+      _turnIndexes: 00000000
+    _turnCount: 0
