@@ -5,13 +5,12 @@ namespace Towers
 {
     public class Placement : MonoBehaviour
     {
-        public bool IsOccupied { get; private set; }
+        public bool IsOccupied => _ring != null;
         Ring _ring;
         
         public void SetRing(Ring ring)
         {
             _ring = ring;
-            IsOccupied = true;
             _ring.OnRingRemoved += RemoveRing;
         }
 
@@ -19,7 +18,6 @@ namespace Towers
         {
             _ring.OnRingRemoved -= RemoveRing;
             _ring = null;
-            IsOccupied = false;
         }
     }
 }

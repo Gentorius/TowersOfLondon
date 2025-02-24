@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f924292878f40a4289c0d7e7043398a, type: 3}
   m_Name: RingPrefabs
   m_EditorClassIdentifier: 
-  ringPrefabs:
+  RingPrefabList:
   - {fileID: 7314986255316077426, guid: 9e564f89553f91e4d8eef036ec355d85, type: 3}
   - {fileID: 4655897586074953747, guid: 81a0fab6aa7e0a54daecc90265d34904, type: 3}
   - {fileID: 1048234374912673852, guid: e77be5f422cd2224aa017914268a838a, type: 3}

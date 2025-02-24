@@ -28,15 +28,9 @@ namespace Towers
         {
             var ringPlacement = GetRingPlacement(placementIndex);
             ring.transform.SetParent(ringPlacement.gameObject.transform);
+            ringPlacement.SetRing(ring);
         }
-        
-        public void RemoveRing(int ringIndex)
-        {
-            var ringPlacement = GetRingPlacement(ringIndex);
-            var ring = ringPlacement.gameObject.transform.GetChild(0).gameObject;
-            Destroy(ring);
-        }
-        
+
         public bool TryGetLowestOpenRingPlacement(out Vector3 position, out int placementIndex)
         {
             if (!_lowerRingPlacement.IsOccupied)

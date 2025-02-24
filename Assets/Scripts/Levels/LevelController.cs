@@ -15,15 +15,13 @@ namespace Levels
         RingManager _ringManager;
         [SerializeField]
         Settings.Settings _settings;
-        
-        Level _currentLevel;
+
         LevelLayout _currentLevelLayout;
         LevelLayout _goalLevelLayout;
         readonly List<Ring> _rings = new();
         int _turnGoal;
         int _turnCount;
         readonly SolutionFinder _solutionFinder = new();
-        readonly LevelReader _levelReader = new();
         public int TurnsLeft => _turnGoal - _turnCount;
 
         public event Action OnVictory;
@@ -32,21 +30,8 @@ namespace Levels
 
         public void StartLevel()
         {
-            var level = _levelReader.ReadLevelFromJson(_settings.LevelPath);
+            var level = LevelReader.ReadLevelFromJson(_settings.LevelPath);
             BuildLevel(level);
-        }
-        
-        public void RestartLevel()
-        {
-            foreach (var ring in _rings)
-            {
-                ring.OnRingRemoved -= OnRingRemoved;
-                Destroy(ring.gameObject);
-            }
-            
-            _rings.Clear();
-            _towerManager.OnRingPlaced -= OnRingPlaced;
-            BuildLevel(_currentLevel);
         }
         
         void BuildLevel(Level level)
@@ -63,12 +48,20 @@ namespace Levels
                 return;
             }
             
-            for (var x = 0; x < 3; x++)
+            _ringManager.DestroyAllRings();
+            _turnCount = 0;
+            
+            for (var row = 0; row < 3; row++)
             {
-                for (var y = 0; y < 3; y++)
+                for (var column = 0; column < 3; column++)
                 {
-                    var ringIndex = level.StartingLayout.Tiles[x, y].RingIndex;
-                    _towerManager.PlaceRingInSpecificPlacement(ringIndex, x, y, out var ring);
+                    if (!level.StartingLayout.Tiles[row, column].IsOccupied)
+                    {
+                        continue;
+                    }
+                    
+                    var ringIndex = level.StartingLayout.Tiles[row, column].RingIndex;
+                    _towerManager.PlaceRingInStartingPosition(ringIndex, row, column, out var ring);
                     _rings.Add(ring);
                     ring.OnRingRemoved += OnRingRemoved;
                 }
@@ -79,11 +72,16 @@ namespace Levels
                 for (var y = 0; y < 3; y++)
                 {
                     var ringIndex = level.GoalLayout.Tiles[x, y].RingIndex;
+                    
+                    if (ringIndex == -1)
+                    {
+                        continue;
+                    }
+                    
                     _towerManager.PlaceRingInGoalTower(ringIndex, x, y);
                 }
             }
-            
-            _currentLevel = level;
+
             _currentLevelLayout = level.StartingLayout;
             _goalLevelLayout = level.GoalLayout;
             _towerManager.OnRingPlaced += OnRingPlaced;
@@ -100,11 +98,11 @@ namespace Levels
 
         void OnRingPlaced(Vector2 position)
         {
-            var x = (int)position.x;
-            var y = (int)position.y;
+            var column = (int)position.x;
+            var row = (int)position.y;
             var ringIndex = _ringManager.SelectedRing.RingIndex;
             
-            _currentLevelLayout.TryPlaceRingByCoordinates(ringIndex, x, y);
+            _currentLevelLayout.TryPlaceRingByCoordinates(ringIndex, row, column);
             _turnCount++;
             OnTurnCountChanged?.Invoke(TurnsLeft);
             

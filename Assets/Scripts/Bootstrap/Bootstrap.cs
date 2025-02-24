@@ -8,11 +8,13 @@ namespace Bootstrap
     {
         [SerializeField]
         UIManager _uiManager;
+        
+        MenuPresenter _menuPresenter;
 
         void Start()
         {
-            _uiManager.GetPresenter<MenuPresenter>().LoadAndShowWindow();
-            Destroy(gameObject);
+            _menuPresenter = _uiManager.GetPresenter<MenuPresenter>();
+            _menuPresenter.LoadAndShowWindow();
         }
     }
 }

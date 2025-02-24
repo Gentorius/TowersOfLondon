@@ -1,4 +1,5 @@
 using System;
+using Settings;
 using UI.Basics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +21,6 @@ namespace UI.Settings
         public event Action OnMediumButtonClicked;
         public event Action OnHardButtonClicked;
 
-        void Start()
-        {
-            _highlighter.transform.position = _mediumButton.gameObject.transform.position;
-        }
-
         void OnEnable()
         {
             _easyButton.onClick.AddListener(OnEasyButtonClickedHandler);
@@ -37,6 +33,17 @@ namespace UI.Settings
             _easyButton.onClick.RemoveListener(OnEasyButtonClickedHandler);
             _mediumButton.onClick.RemoveListener(OnMediumButtonClickedHandler);
             _hardButton.onClick.RemoveListener(OnHardButtonClickedHandler);
+        }
+        
+        public void PlaceHighlighterOnButton(Difficulty difficulty)
+        {
+            _highlighter.transform.position = difficulty switch
+            {
+                Difficulty.Easy => _easyButton.gameObject.transform.position,
+                Difficulty.Medium => _mediumButton.gameObject.transform.position,
+                Difficulty.Hard => _hardButton.gameObject.transform.position,
+                _ => _mediumButton.transform.position
+            };
         }
         
         void OnEasyButtonClickedHandler()

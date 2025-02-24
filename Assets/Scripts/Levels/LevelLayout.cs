@@ -66,7 +66,19 @@ namespace Levels
         
         public object Clone()
         {
-            return MemberwiseClone();
+            var clone = new LevelLayout
+            {
+                Tiles = new TileData[3, 3]
+            };
+
+            for (var x = 0; x < 3; x++)
+            {
+                clone.Tiles[0, x] = Tiles[0, x].Clone();
+                clone.Tiles[1, x] = Tiles[1, x].Clone();
+                clone.Tiles[2, x] = Tiles[2, x].Clone();
+            }
+            
+            return clone;
         }
 
         bool IsIndexPlaced(int ringIndex)

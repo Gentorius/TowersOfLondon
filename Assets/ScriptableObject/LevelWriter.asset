@@ -12,63 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ae46859bcd47d0a5770d8397a7a67e, type: 3}
   m_Name: LevelWriter
   m_EditorClassIdentifier: 
-  _levelName: Easy
+  _levelName: Hard
   _targetLevelLayout:
     _upperTiles:
     - _ringIndex: -1
-      _isOccupied: 0
     - _ringIndex: -1
-      _isOccupied: 0
     - _ringIndex: -1
-      _isOccupied: 0
     _middleTiles:
     - _ringIndex: -1
-      _isOccupied: 0
-    - _ringIndex: -1
-      _isOccupied: 0
-    - _ringIndex: -1
-      _isOccupied: 0
+    - _ringIndex: 4
+    - _ringIndex: 5
     _lowerTiles:
     - _ringIndex: 1
-      _isOccupied: 1
     - _ringIndex: 2
-      _isOccupied: 1
     - _ringIndex: 3
-      _isOccupied: 1
   _goalLevelLayout:
     _upperTiles:
     - _ringIndex: -1
-      _isOccupied: 0
     - _ringIndex: -1
-      _isOccupied: 0
     - _ringIndex: -1
-      _isOccupied: 0
     _middleTiles:
+    - _ringIndex: 4
+    - _ringIndex: 5
     - _ringIndex: -1
-      _isOccupied: 0
-    - _ringIndex: -1
-      _isOccupied: 0
-    - _ringIndex: -1
-      _isOccupied: 0
     _lowerTiles:
     - _ringIndex: 3
-      _isOccupied: 1
     - _ringIndex: 2
-      _isOccupied: 1
     - _ringIndex: 1
-      _isOccupied: 1
   _solution:
     _paths:
-    - _ringIndex: 3
-      _x: 02000000
-      _y: 00000000
-      _turnIndexes: 00000000
+    - _ringIndex: 4
+      _x: 0100000002000000010000000200000001000000
+      _y: 0100000002000000000000000200000000000000
+      _turnIndexes: 00000000030000000b0000000c0000000d000000
+    - _ringIndex: 5
+      _x: 010000000100000001000000
+      _y: 020000000000000001000000
+      _turnIndexes: 000000000100000005000000
+    - _ringIndex: 1
+      _x: 020000000000000000000000000000000000000002000000
+      _y: 000000000200000001000000010000000100000002000000
+      _turnIndexes: 00000000060000000700000008000000090000000e000000
     - _ringIndex: 2
       _x: 02000000
       _y: 01000000
       _turnIndexes: 00000000
-    - _ringIndex: 1
-      _x: 02000000
-      _y: 02000000
-      _turnIndexes: 00000000
-    _turnCount: 0
+    - _ringIndex: 3
+      _x: 02000000000000000100000002000000
+      _y: 02000000000000000200000000000000
+      _turnIndexes: 0000000002000000040000000a000000
+    _turnCount: 14

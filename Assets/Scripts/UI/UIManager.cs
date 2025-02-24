@@ -17,18 +17,17 @@ namespace UI
         readonly Dictionary<Type, IPresenter> _presenters = new();
         readonly List<IPresenter> _path = new();
         IPresenter CurrentPresenter => _presenters.FirstOrDefault(x => x.Value.IsShown).Value;
-        bool _isGoingBack;
         
-        public T GetPresenter<T>() where T : IPresenter
+        public T GetPresenter<T>() where T : class, IPresenter, new()
         {
             if (_presenters.TryGetValue(typeof(T), out var presenter))
             {
                 return (T)presenter;
             }
 
-            var newPresenter = (T)Activator.CreateInstance(typeof(T));
-            newPresenter.Initialize(this);
+            var newPresenter = new T();
             _presenters.Add(typeof(T), newPresenter);
+            newPresenter.Initialize(this);
             return newPresenter;
         }
         
@@ -37,9 +36,9 @@ namespace UI
             var viewPrefab = _viewPrefabs.FindViewByType<T>();
             if (viewPrefab != null)
             {
-                Instantiate(viewPrefab, _root.transform);
-                viewPrefab.SetActive(false);
-                return viewPrefab.GetComponent<T>();
+                var instance = Instantiate(viewPrefab, _root.transform);
+                instance.SetActive(false);
+                return instance.GetComponent<T>();
             }
 
             Debug.LogError($"View prefab for {typeof(T)} not found");
@@ -50,8 +49,7 @@ namespace UI
         {
             component.gameObject.SetActive(true);
             
-            if (!_isGoingBack)
-                _path.Add(CurrentPresenter);
+            _path.Add(CurrentPresenter);
             
             return component;
         }
@@ -72,14 +70,12 @@ namespace UI
             {
                 return;
             }
-
-            _isGoingBack = true;
+            
             CurrentPresenter.HideWindow();
-            _path.RemoveAt(_path.Count - 1);
-            _path.LastOrDefault()?.ShowWindow();
+            _path[^2].ShowWindow();
         }
         
-        public T GetMonoBehaviour<T>() where T : MonoBehaviour
+        public static T GetMonoBehaviour<T>() where T : MonoBehaviour
         {
             return FindObjectsByType<T>(FindObjectsSortMode.None).FirstOrDefault();
         }

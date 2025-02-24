@@ -54,9 +54,8 @@ namespace Turns
         Solution GenerateStartingSolution(LevelLayout startingLayout, LevelLayout goalLayout)
         {
             var solution = new Solution();
-            solution.SetStartingLayout(startingLayout);
-            
             var currentLayout = GetACopyOf(startingLayout);
+            solution.SetStartingLayout(currentLayout);
             
             while (!LayoutComparer.Compare(currentLayout, goalLayout))
             {
@@ -69,9 +68,8 @@ namespace Turns
         bool TryGenerateBetterSolution (LevelLayout startingLayout, LevelLayout goalLayout, out Solution solution)
         {
             solution = new Solution();
-            solution.SetStartingLayout(startingLayout);
-            
             var currentLayout = GetACopyOf(startingLayout);
+            solution.SetStartingLayout(currentLayout);
             var exceedsBestSolution = false;
             
             while (!LayoutComparer.Compare(currentLayout, goalLayout))
@@ -88,7 +86,7 @@ namespace Turns
             return !exceedsBestSolution;
         }
 
-        LevelLayout GetACopyOf(LevelLayout layout)
+        static LevelLayout GetACopyOf(LevelLayout layout)
         {
             return layout.Clone() as LevelLayout;
         }

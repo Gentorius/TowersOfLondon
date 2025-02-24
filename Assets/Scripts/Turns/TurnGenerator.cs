@@ -21,16 +21,16 @@ namespace Turns
         {
             var topRings = new List<int>();
             var tiles = currentLayout.Tiles;
-            for (var y = 0; y < 3; y++)
+            for (var row = 0; row < 3; row++)
             {
-                for (var x = 0; x < 3; x++)
+                for (var column = 0; column < 3; column++)
                 {
-                    if (!tiles[y, x].IsOccupied)
+                    if (!tiles[row, column].IsOccupied)
                         continue;
 
-                    if (y == 0 || !tiles[y, x - 1].IsOccupied)
+                    if (row == 0 || !tiles[row - 1, column].IsOccupied)
                     {
-                        topRings.Add(tiles[x, y].RingIndex);
+                        topRings.Add(tiles[row, column].RingIndex);
                     }
                 }
             }

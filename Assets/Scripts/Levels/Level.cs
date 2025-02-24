@@ -6,8 +6,8 @@ namespace Levels
     [Serializable]
     public class Level
     {
-        public LevelLayout StartingLayout { get; internal set; }
-        public LevelLayout GoalLayout { get; internal set; }
+        public LevelLayout StartingLayout;
+        public LevelLayout GoalLayout;
         public Solution Solution;
         
         public void OnRead()

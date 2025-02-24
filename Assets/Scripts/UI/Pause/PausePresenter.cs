@@ -39,7 +39,7 @@ namespace UI.Pause
         
         void OnRestartButtonClickedHandler()
         {
-            _levelController.RestartLevel();
+            _levelController.StartLevel();
             UIManager.GoBack();
         }
         

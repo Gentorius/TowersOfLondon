@@ -39,6 +39,7 @@ namespace Rings
         {
             var ring = Instantiate(ringPrefab, transform.position, Quaternion.identity);
             ring.transform.SetParent(transform);
+            ring.transform.localScale = new Vector3(2, 2, 2);
         }
         
         public void OnPointerClick(PointerEventData eventData)

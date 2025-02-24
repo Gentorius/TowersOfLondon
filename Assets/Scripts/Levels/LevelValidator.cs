@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Levels
 {
@@ -16,12 +17,12 @@ namespace Levels
         {
             for (var x = 0; x < 3; x++)
             {
-                if (levelLayout.Tiles[x, 0].IsOccupied && !levelLayout.Tiles[x, 1].IsOccupied)
+                if (levelLayout.Tiles[0, x].IsOccupied && !levelLayout.Tiles[1, x].IsOccupied)
                 {
                     return true;
                 }
                 
-                if (levelLayout.Tiles[x, 1].IsOccupied && !levelLayout.Tiles[x, 2].IsOccupied)
+                if (levelLayout.Tiles[1, x].IsOccupied && !levelLayout.Tiles[2, x].IsOccupied)
                 {
                     return true;
                 }
@@ -47,6 +48,7 @@ namespace Levels
                     
                     if (ringIndexes.Contains(ringIndex))
                     {
+                        Debug.LogError($"Level layout has duplicate ring index: {ringIndex}");
                         return true;
                     }
                     

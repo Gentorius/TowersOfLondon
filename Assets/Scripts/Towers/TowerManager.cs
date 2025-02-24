@@ -23,20 +23,20 @@ namespace Towers
             }
         }
         
-        public void PlaceRingInSpecificPlacement(int ringIndex, int x, int y, out Ring ring)
+        public void PlaceRingInStartingPosition(int ringIndex, int row, int column, out Ring ring)
         {
-            var tower = _towers[x];
-            var placementPosition = tower.GetPlacementPosition(y);
-            _ringManager.TrySpawnRing(placementPosition, ringIndex, x, y, out ring);
-            tower.PlaceRing(ring, y);
+            var tower = _towers[column];
+            var placementPosition = tower.GetPlacementPosition(row);
+            _ringManager.SpawnGameplayRing(placementPosition, ringIndex, row, column, out ring);
+            tower.PlaceRing(ring, row);
         }
         
-        public void PlaceRingInGoalTower(int ringIndex, int x, int y)
+        public void PlaceRingInGoalTower(int ringIndex, int row, int column)
         {
-            var tower = _goalTowers[x];
-            var placementPosition = tower.GetPlacementPosition(y);
-            _ringManager.TrySpawnRing(placementPosition, ringIndex, x, y, out var ring);
-            tower.PlaceRing(ring, y);
+            var tower = _goalTowers[column];
+            var placementPosition = tower.GetPlacementPosition(row);
+            var ring = _ringManager.SpawnRing(placementPosition, ringIndex, row, column);
+            tower.PlaceRing(ring, row);
         }
 
         void OnTowerClicked(Tower tower)
@@ -52,9 +52,9 @@ namespace Towers
             }
             
             var ring = _ringManager.SelectedRing;
-            _ringManager.PlaceRing(placementPosition, tower.TowerIndex, placementIndex);
-            tower.PlaceRing(ring, placementIndex);
             OnRingPlaced?.Invoke(new Vector2(tower.TowerIndex, placementIndex));
+            _ringManager.PlaceRing(placementPosition, placementIndex, tower.TowerIndex);
+            tower.PlaceRing(ring, placementIndex);
         }
 
         void OnDestroy()

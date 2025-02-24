@@ -32,24 +32,29 @@ namespace Rings
             }
         }
         
-        public bool TrySpawnRing(Vector3 position, int ringIndex, int x, int y, out Ring ring)
+        public void SpawnGameplayRing(Vector3 position, int ringIndex, int x, int y, out Ring ring)
+        {
+            ring = SpawnRing(position, ringIndex, x, y);
+
+            _rings.Add(ring);
+        }
+        
+        public Ring SpawnRing(Vector3 position, int ringIndex, int x, int y)
         {
             if (!TryGetUniqueRingPrefab(out var ringPrefab))
             {
-                ring = null;
-                return false;
+                return null;
             }
         
-            ring = new GameObject().AddComponent<Ring>();
+            var ring = new GameObject().AddComponent<Ring>();
             ring.transform.position = position;
             ring.SetPosition(x, y);
             ring.SetRingPrefab(ringPrefab);
             ring.OnRingClicked += OnRingClicked;
-            _rings.Add(ring);
             ring.RingIndex = ringIndex;
-            return true;
+            return ring;
         }
-        
+
         public void PlaceRing(Vector3 position, int x, int y)
         {
             if (SelectedRing == null)
@@ -61,6 +66,22 @@ namespace Rings
             SelectedRing.SetPosition(x, y);
             SelectedRing.OnRingClicked += OnRingClicked;
             SelectedRing = null;
+        }
+        
+        public void DestroyAllRings()
+        {
+            if (_rings == null || _rings.Count == 0)
+            {
+                return;
+            }
+            
+            foreach (var ring in _rings)
+            {
+                ring.OnRingClicked -= OnRingClicked;
+                ring.DestroyRing();
+            }
+        
+            _rings.Clear();
         }
 
         void OnRingClicked(Ring clickedRing)
@@ -112,7 +133,7 @@ namespace Rings
         {
             var x = ring.X;
             var y = ring.Y;
-            return !_rings.Any(r => r.X == x && r.Y == y - 1);
+            return !_rings.Any(r => r.X == x - 1 && r.Y == y);
         }
     }
 }

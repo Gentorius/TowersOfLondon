@@ -5,10 +5,11 @@ namespace Levels
 {
     public class LevelReader
     {
-        public Level ReadLevelFromJson(string filePath)
+        public static Level ReadLevelFromJson(string filePath)
         {
             if (!DoesFileExist(filePath))
             {
+                Debug.LogError($"File does not exist at path: {filePath}");
                 return null;
             }
             

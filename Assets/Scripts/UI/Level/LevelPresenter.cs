@@ -17,7 +17,7 @@ namespace UI.Level
         {
             base.Initialize(uiManager);
             _pausePresenter = uiManager.GetPresenter<PausePresenter>();
-            _levelController = uiManager.GetMonoBehaviour<LevelController>();
+            _levelController = UIManager.GetMonoBehaviour<LevelController>();
             _menuPresenter = uiManager.GetPresenter<MenuPresenter>();
         }
 
@@ -71,7 +71,7 @@ namespace UI.Level
         
         void OnRestartButtonClickedHandler()
         {
-            _levelController.RestartLevel();
+            _levelController.StartLevel();
             ResultWidget.gameObject.SetActive(false);
         }
     }
