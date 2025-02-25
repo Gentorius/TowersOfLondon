@@ -106,7 +106,7 @@ namespace Levels
             _turnCount++;
             OnTurnCountChanged?.Invoke(TurnsLeft);
             
-            if (_currentLevelLayout.Equals(_goalLevelLayout))
+            if (LayoutComparer.Compare(_currentLevelLayout, _goalLevelLayout))
             {
                 Victory();
             }

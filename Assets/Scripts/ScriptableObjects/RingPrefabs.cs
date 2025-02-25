@@ -5,8 +5,11 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "RingPrefabs", menuName = "Scriptable Objects/RingPrefabs")]
     public class RingPrefabs : ScriptableObject
     {
-        public GameObject[] RingPrefabList;
+        [SerializeField]
+        GameObject[] _ringPrefabList;
+        
+        public GameObject[] RingPrefabList => _ringPrefabList;
     
-        public bool IsEmpty => RingPrefabList == null || RingPrefabList.Length == 0;
+        public bool IsEmpty => _ringPrefabList == null || _ringPrefabList.Length == 0;
     }
 }

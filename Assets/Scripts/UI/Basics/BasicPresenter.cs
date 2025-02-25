@@ -4,7 +4,7 @@ namespace UI.Basics
     {
         protected UIManager UIManager;
         protected TView View;
-        public bool IsShown => View && View.gameObject.activeSelf;
+        public bool IsShown => View && View.gameObject.activeInHierarchy;
 
         public virtual void Initialize(UIManager uiManager)
         {

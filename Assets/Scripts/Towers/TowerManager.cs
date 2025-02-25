@@ -27,7 +27,7 @@ namespace Towers
         {
             var tower = _towers[column];
             var placementPosition = tower.GetPlacementPosition(row);
-            _ringManager.SpawnGameplayRing(placementPosition, ringIndex, row, column, out ring);
+            ring = _ringManager.SpawnGameplayRing(placementPosition, ringIndex, row, column);
             tower.PlaceRing(ring, row);
         }
         
@@ -35,7 +35,7 @@ namespace Towers
         {
             var tower = _goalTowers[column];
             var placementPosition = tower.GetPlacementPosition(row);
-            var ring = _ringManager.SpawnRing(placementPosition, ringIndex, row, column);
+            var ring = _ringManager.SpawnGoalRing(placementPosition, ringIndex, row, column);
             tower.PlaceRing(ring, row);
         }
 

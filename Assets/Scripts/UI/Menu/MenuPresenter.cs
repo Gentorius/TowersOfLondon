@@ -35,15 +35,15 @@ namespace UI.Menu
         
         void OnStartButtonClickedHandler()
         {
+            HideWindow();
             _levelController.StartLevel();
             _levelPresenter.LoadAndShowWindow();
-            HideWindow();
         }
 
         void OnSettingsButtonClickedHandler()
         {
-            _settingsPresenter.LoadAndShowWindow();
             HideWindow();
+            _settingsPresenter.LoadAndShowWindow();
         }
 
         static void OnExitButtonClickedHandler()

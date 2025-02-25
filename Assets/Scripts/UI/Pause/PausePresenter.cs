@@ -45,8 +45,8 @@ namespace UI.Pause
         
         void OnReturnToMenuButtonClickedHandler()
         {
-            _menuPresenter.ShowWindow();
             HideWindow();
+            _menuPresenter.ShowWindow();
         }
 
         static void OnExitButtonClickedHandler()
